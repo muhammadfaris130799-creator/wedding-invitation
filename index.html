@@ -1,0 +1,673 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="Faris-Fathima-Wedding"
+ZIP_NAME="Faris-Fathima.zip"
+
+echo "Creating project folder: ${ROOT_DIR}"
+mkdir -p "${ROOT_DIR}/assets"
+
+cat > "${ROOT_DIR}/index.html" <<'HTML'
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Fathima & Faris — Wedding Invitation</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Join Faris & Fathima for their Nikah - 1 august 2026 and Wedding Celebration —2 August 2026. Tap to open the invitation." />
+  <meta name="author" content="Faris & Fathima" />
+  <link rel="icon" href="assets/favicon.ico" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Faris & Fathima — Wedding Invitation" />
+  <meta property="og:description" content="Together with our families, we joyfully invite you to our Nikah and Wedding Celebration." />
+  <meta property="og:image" content="assets/og-image.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Faris & Fathima — Wedding Invitation" />
+  <meta name="twitter:description" content="Together with our families, we joyfully invite you to our Nikah and Wedding Celebration." />
+  <meta name="twitter:image" content="assets/og-image.jpg" />
+
+  <!-- Fonts / Premium typography (falls back to system) -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#0b0604" />
+</head>
+<body>
+  <!-- Opening cover -->
+  <main id="app">
+    <section id="cover" class="cover" aria-label="Invitation cover">
+      <div class="cover-inner">
+        <img id="logo" class="logo" src="assets/logo.png" alt="F & M logo (animated gold)" loading="lazy" />
+        <h1 class="couple-names">
+          <span id="name1" class="name">Muhammad Faris</span>
+          <span class="amp">&amp;</span>
+          <span id="name2" class="name">Fathima Subair</span>
+        </h1>
+        <p class="subtitle">Bبِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ</p>
+
+        <button id="openBtn" class="btn btn-primary" aria-label="Tap to open invitation">Tap to Open</button>
+        <p class="hint">Tap anywhere on mobile or click to enter — music will play after you tap</p>
+      </div>
+      <div class="gold-shimmer" aria-hidden="true"></div>
+    </section>
+
+    <!-- App content (hidden until open) -->
+    <section id="mainContent" class="hidden" aria-hidden="true">
+      <!-- Top area with couple picture and play controls -->
+      <header class="hero glass">
+        <div class="hero-left">
+          <div class="message glass">
+            <p class="bismillah">"بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ"</p>
+            <p class="invite-text">
+              Together with our families,<br />
+              we joyfully invite you to our Nikah and Wedding Celebration.<br />
+              Your presence and prayers will make our special day even more meaningful.
+            </p>
+            <div class="controls">
+              <button id="playBtn" class="btn btn-ghost" aria-pressed="false">Play Music</button>
+              <a id="shareBtn" class="btn btn-gold" href="#" role="button" aria-label="Share on WhatsApp">Share via WhatsApp</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="couple-card glass">
+            <img id="coupleImg" class="couple" src="assets/couple.png" alt="Couple illustration" loading="lazy" />
+            <div class="names">
+              <div class="pname">Fathima</div>
+              <div class="vs">❤</div>
+              <div class="pname">Faris</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Countdown -->
+      <section id="countdownSection" class="section glass">
+        <h2>Countdown to Nikah</h2>
+        <div id="countdown" class="countdown" role="timer" aria-live="polite">
+          <div><span id="days">0</span><small>Days</small></div>
+          <div><span id="hours">0</span><small>Hours</small></div>
+          <div><span id="minutes">0</span><small>Minutes</small></div>
+          <div><span id="seconds">0</span><small>Seconds</small></div>
+        </div>
+      </section>
+
+      <!-- Scratch card reveal -->
+      <section id="scratchSection" class="section glass">
+        <h2>Scratch to Reveal Details</h2>
+        <div class="scratch-wrapper">
+          <canvas id="scratchCanvas" aria-label="Scratch card. Use finger or mouse to scratch to reveal details." width="800" height="400"></canvas>
+          <div class="scratch-content" id="scratchContent" aria-hidden="true">
+            <h3>You're invited</h3>
+            <p>Details revealed below.</p>
+            <div class="details-grid">
+              <div class="card">
+                <h4>Nikah</h4>
+                <p><strong>Date:</strong> 1 August 2026</p>
+                <p><strong>Time:</strong> After Maghrib</p>
+                <p><strong>Venue:</strong> Karolam Masjid</p>
+                <a class="btn btn-outline" target="_blank" rel="noopener" href="https://maps.app.goo.gl/E1BZsvovXhyTYdaz7?g_st=ic">Open Maps</a>
+              </div>
+
+              <div class="card">
+                <h4>Wedding Reception</h4>
+                <p><strong>Date:</strong> 2 August 2026</p>
+                <p><strong>Venue:</strong> Groom's Residence</p>
+                <a class="btn btn-outline" target="_blank" rel="noopener" href="https://maps.app.goo.gl/fPy7GSLeTWhmiTG4A?g_st=ic">Open Maps</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- More info -->
+      <section id="more" class="section">
+        <h2>Celebration</h2>
+        <div class="cards">
+          <article class="glass card small">
+            <h3>Music</h3>
+            <p>Song included. Use the player above to control music.</p>
+          </article>
+          <article class="glass card small">
+            <h3>Dress</h3>
+            <p>Traditional / Formal attire. Please keep it modest.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>Made with ❤ — Faris & Fathima</p>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Accessibility live region for messages -->
+  <div id="ariaLive" class="sr-only" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
+HTML
+
+cat > "${ROOT_DIR}/style.css" <<'CSS'
+:root{
+  --bg:#070306;
+  --glass-bg: rgba(255,255,255,0.03);
+  --gold:#c9a94a;
+  --gold-2:#e5c76b;
+  --muted:#afa7a0;
+  --accent: linear-gradient(90deg,#f9e4b7,#c9a94a 50%,#f6e9c9);
+  --radius:18px;
+  --glass-border: rgba(255,255,255,0.05);
+  --max-width:1100px;
+  --ease: cubic-bezier(.2,.9,.3,1);
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --font-serif: "Playfair Display", Georgia, serif;
+}
+
+/* Mobile first */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--font-sans);
+  color:#f7f3f2;
+  background:
+    radial-gradient(1200px 600px at 10% 10%, rgba(201,169,74,0.04), transparent 10%),
+    radial-gradient(1000px 500px at 90% 90%, rgba(229,199,107,0.03), transparent 12%),
+    var(--bg);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+  overflow-y:auto;
+}
+
+/* visually hidden */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Center container styles */
+main#app{max-width:var(--max-width);margin:0 auto;padding:20px}
+
+/* Cover */
+.cover{
+  min-height:95vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  border-radius:20px;
+  overflow:hidden;
+  padding:40px 20px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  box-shadow: 0 6px 40px rgba(0,0,0,0.6), inset 0 -60px 120px rgba(0,0,0,0.5);
+}
+.cover-inner{text-align:center;z-index:3;backdrop-filter: blur(2px)}
+.logo{
+  width:88px;height:88px;display:block;margin:0 auto 14px;
+  filter: drop-shadow(0 6px 10px rgba(201,169,74,0.22));
+  animation:logoFloat 5s ease-in-out infinite;
+  transform-origin:center;
+}
+@keyframes logoFloat{
+  0%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-8px) rotate(-2deg)}
+  100%{transform:translateY(0) rotate(0)}
+}
+.couple-names{font-family:var(--font-serif);font-weight:700;font-size:1.9rem;margin:6px 0;color:var(--gold-2);text-shadow:0 2px 8px rgba(0,0,0,0.6)}
+.couple-names .amp{display:block;font-size:.8rem;color:var(--muted);margin:6px 0}
+.subtitle{color:var(--muted);margin-bottom:18px}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:32px;border:0;cursor:pointer;font-weight:600}
+.btn-primary{background:linear-gradient(90deg,#b9892a,#f0d48c);color:#160f07;box-shadow:0 6px 18px rgba(201,169,74,0.18);transform:translateZ(0);transition:transform .3s var(--ease)}
+.btn-primary:active{transform:translateY(2px) scale(.995)}
+.hint{font-size:.85rem;color:rgba(255,255,255,0.5);margin-top:12px}
+
+/* Gold shimmer overlay */
+.gold-shimmer{
+  position:absolute;inset:0;pointer-events:none;background:
+    radial-gradient(600px 200px at 20% 80%, rgba(229,199,107,0.06), transparent 8%),
+    linear-gradient(120deg, rgba(255,255,255,0.02), transparent 30%);
+  mix-blend-mode:overlay;z-index:2;
+  animation:shimmer 6s linear infinite;
+}
+@keyframes shimmer{
+  0%{transform:translateX(-20%)}
+  100%{transform:translateX(20%)}
+}
+
+/* Hidden main content until open */
+.hidden{display:none}
+
+/* Hero */
+.hero{display:flex;gap:20px;align-items:stretch;padding:22px 16px;border-radius:18px;margin-top:24px}
+.hero-left{flex:1}
+.hero-right{flex-basis:220px;display:flex;align-items:center;justify-content:center}
+.couple-card{width:220px;padding:10px;border-radius:16px;position:relative;overflow:visible}
+.couple{width:100%;border-radius:14px;transform-origin:center;animation:float 6s ease-in-out infinite}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
+.names{display:flex;justify-content:center;align-items:center;margin-top:8px;gap:10px}
+.pname{font-weight:600;color:var(--muted)}
+.vs{color:var(--gold-2);font-size:1.1rem}
+
+/* Glassmorphism */
+.glass{background:var(--glass-bg);border-radius:var(--radius);border:1px solid var(--glass-border);padding:14px;box-shadow:0 8px 30px rgba(2,2,2,0.5);}
+
+/* Countdown */
+.section{margin:28px 0}
+.countdown{display:flex;gap:12px;justify-content:center;align-items:center}
+.countdown>div{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:12px 16px;text-align:center;min-width:70px}
+.countdown span{display:block;font-weight:700;font-size:1.35rem;color:var(--gold-2)}
+.countdown small{display:block;font-size:.7rem;color:var(--muted)}
+
+/* Scratch */
+.scratch-wrapper{position:relative;width:100%;max-width:900px;margin:0 auto;border-radius:12px;overflow:hidden}
+#scratchCanvas{width:100%;height:auto;display:block;touch-action:none;background:linear-gradient(180deg,#111 0%,#080505 100%)}
+.scratch-content{position:absolute;inset:0;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;pointer-events:none}
+.details-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+.card{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);}
+
+/* small cards */
+.cards{display:flex;gap:12px;flex-wrap:wrap}
+.card.small{flex:1 1 180px;padding:12px}
+
+/* Buttons */
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--gold-2)}
+.btn-gold{background:linear-gradient(90deg,#b7892a,#f7e2a0);color:#080405}
+.btn-outline{background:transparent;border:1px solid rgba(229,199,107,0.15);padding:8px 12px;color:var(--gold-2)}
+
+/* Footer */
+.footer{padding:24px;text-align:center;color:var(--muted);font-size:.9rem}
+
+/* Animations and transitions */
+.fade-up{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.fade-up.in{opacity:1;transform:none}
+
+/* Gold glow for focus */
+:focus{outline:3px solid rgba(201,169,74,0.18);outline-offset:3px}
+
+/* Responsive */
+@media(min-width:900px){
+  .hero{flex-direction:row}
+  .details-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:899px){
+  .hero{flex-direction:column}
+  .couple-card{width:160px}
+}
+
+/* Parallax decoration */
+.hero::before{content:"";position:absolute;right:-10%;top:-20%;width:600px;height:600px;background:radial-gradient(circle at center, rgba(229,199,107,0.06), transparent 20%);transform:rotate(20deg);pointer-events:none}
+
+/* Luxury button hover */
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(229,199,107,0.08)}
+
+/* gold text shimmer */
+.gold-text{background:var(--accent);-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmerText 3s linear infinite}
+@keyframes shimmerText{0%{background-position:-50% 0}100%{background-position:150% 0}}
+
+/* small helpers */
+.center{text-align:center}
+CSS
+
+cat > "${ROOT_DIR}/config.js" <<'JS'
+/* Editable content for the invitation.
+   Change names, dates, messages, links here.
+*/
+window.InviteConfig = {
+  couple: {
+    name1: "Muhammad Faris",
+    name2: "Fathima Subair",
+    subtitle: "بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ"
+  },
+  messages: {
+    invite: "Together with our families,\nwe joyfully invite you to our Nikah and Wedding Celebration.\nYour presence and prayers will make our special day even more meaningful."
+  },
+  nikah: {
+    date: "2026-08-01T19:30:00", // ISO target (use local timezone or UTC)
+    timeLabel: "After Maghrib",
+    venue: "Karolam Masjid",
+    maps: "https://maps.app.goo.gl/E1BZsvovXhyTYdaz7?g_st=ic"
+  },
+  reception: {
+    date: "2026-08-02",
+    venue: "Groom's Residence",
+    maps: "https://maps.app.goo.gl/fPy7GSLeTWhmiTG4A?g_st=ic"
+  },
+  assets: {
+    music: "assets/music.mp3", // fallback - script will use embedded base64 if this file missing
+    logo: "assets/logo.png",
+    couple: "assets/couple.png",
+    ogImage: "assets/og-image.jpg"
+  },
+  shareText: "You're invited to Faris & Fathima's wedding — 1 & 2 August 2026. Tap to open the invitation.",
+  countdownTarget: "2026-08-01T00:00:00"
+};
+JS
+
+cat > "${ROOT_DIR}/script.js" <<'JS'
+/* Main interactive script for the invitation.
+   Handles: open animation, music playback on tap, countdown, scratch card, particles, lazy-loading and simple A11y updates.
+*/
+(() => {
+  const cfg = window.InviteConfig || {};
+
+  // DOM refs
+  const cover = document.getElementById('cover');
+  const openBtn = document.getElementById('openBtn');
+  const mainContent = document.getElementById('mainContent');
+  const playBtn = document.getElementById('playBtn');
+  const shareBtn = document.getElementById('shareBtn');
+  const name1 = document.getElementById('name1');
+  const name2 = document.getElementById('name2');
+  const subtitle = document.querySelector('.subtitle');
+  const inviteText = document.querySelector('.invite-text');
+  const countdownEls = {
+    days: document.getElementById('days'),
+    hours: document.getElementById('hours'),
+    minutes: document.getElementById('minutes'),
+    seconds: document.getElementById('seconds')
+  };
+  const ariaLive = document.getElementById('ariaLive');
+
+  // Apply config content
+  if (cfg.couple) {
+    name1.textContent = cfg.couple.name1 || name1.textContent;
+    name2.textContent = cfg.couple.name2 || name2.textContent;
+    subtitle.textContent = cfg.couple.subtitle || subtitle.textContent;
+  }
+  if (cfg.messages && cfg.messages.invite) {
+    inviteText.textContent = cfg.messages.invite;
+  }
+
+  // Audio handling: create audio but only play after user interaction
+  let audio;
+  function setupAudio() {
+    audio = new Audio();
+    audio.loop = true;
+    audio.preload = 'metadata';
+
+    // If the file is present, use it. We'll use an embedded fallback data URI if it fails to load.
+    audio.src = cfg.assets && cfg.assets.music ? cfg.assets.music : '';
+
+    audio.addEventListener('error', ()=> {
+      // fallback small base64 silent/soft ambience (data URI). This is a lightweight fallback.
+      audio.src = embeddedFallbackAudio;
+    });
+  }
+
+  // A tiny pleasant ambient dataURI (short encoded mp3 fallback). You may replace with assets/music.mp3
+  const embeddedFallbackAudio = "data:audio/mpeg;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAwTEFNRTMuMTAwA8MAAAAAAA//uQZAFWcA..."; // shortened placeholder; if you want actual audio, replace assets/music.mp3
+
+  setupAudio();
+
+  // Play/pause
+  let isPlaying = false;
+  function togglePlay() {
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+      playBtn.textContent = 'Play Music';
+      playBtn.setAttribute('aria-pressed','false');
+      isPlaying=false;
+    } else {
+      audio.play().catch(()=>{/* autoplay blocked */});
+      playBtn.textContent = 'Pause Music';
+      playBtn.setAttribute('aria-pressed','true');
+      isPlaying=true;
+    }
+  }
+  playBtn.addEventListener('click', togglePlay);
+
+  // WhatsApp share
+  shareBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const text = encodeURIComponent(cfg.shareText || document.title);
+    const url = encodeURIComponent(window.location.href);
+    const wa = `https://wa.me/?text=${text}%20${url}`;
+    window.open(wa, '_blank');
+  });
+
+  // Open invitation (tap-to-open)
+  function enterInvitation(){
+    // show main, hide cover
+    cover.classList.add('fade-out');
+    setTimeout(()=>{ cover.style.display='none'; }, 700);
+    mainContent.classList.remove('hidden');
+    mainContent.setAttribute('aria-hidden','false');
+    ariaLive.textContent = 'Invitation opened. Use the controls to play music, scratch to reveal details, or view the countdown.';
+    // unlock audio for browsers: play/pause quickly to get gesture
+    if (audio && audio.paused) {
+      audio.play().then(()=>{ audio.pause(); }).catch(()=>{});
+    }
+  }
+  openBtn.addEventListener('click', ()=> {
+    enterInvitation();
+    // start music only on explicit tap if user chooses playBtn
+  });
+  cover.addEventListener('click', (e)=>{
+    // if clicking outside of button still opens
+    if (e.target === openBtn) return;
+    enterInvitation();
+  });
+
+  // Countdown logic
+  const targetISO = cfg.countdownTarget || cfg.nikah && cfg.nikah.date || "2026-08-01T00:00:00";
+  const target = new Date(targetISO);
+
+  function updateCountdown() {
+    const now = new Date();
+    let diff = Math.max(0, target - now);
+    const days = Math.floor(diff / (1000*60*60*24));
+    diff -= days*(1000*60*60*24);
+    const hours = Math.floor(diff / (1000*60*60));
+    diff -= hours*(1000*60*60);
+    const minutes = Math.floor(diff / (1000*60));
+    diff -= minutes*(1000*60);
+    const seconds = Math.floor(diff / 1000);
+    countdownEls.days.textContent = days;
+    countdownEls.hours.textContent = hours;
+    countdownEls.minutes.textContent = minutes;
+    countdownEls.seconds.textContent = seconds;
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Scratch card implementation
+  const canvas = document.getElementById('scratchCanvas');
+  const scratchContent = document.getElementById('scratchContent');
+  let isDrawing = false;
+  let lastPoint = null;
+  let ctx, w, h;
+  function resizeCanvas() {
+    const ratio = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    w = rect.width;
+    h = rect.height;
+    canvas.width = Math.floor(w * ratio);
+    canvas.height = Math.floor(h * ratio);
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    ctx = canvas.getContext('2d');
+    ctx.scale(ratio, ratio);
+    drawOverlay();
+  }
+  function drawOverlay(){
+    if(!ctx) return;
+    ctx.fillStyle = '#222';
+    ctx.fillRect(0,0,w,h);
+    // gold pattern
+    const g = ctx.createLinearGradient(0,0,w, h);
+    g.addColorStop(0, '#111');
+    g.addColorStop(0.5, '#2a1f1a');
+    g.addColorStop(1, '#0b0604');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,w,h);
+    // top label
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = '#000';
+  }
+  function getPos(e){
+    if (e.touches && e.touches.length) e = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    return {x: (e.clientX - rect.left), y: (e.clientY - rect.top)};
+  }
+  function scratchStroke(p1,p2){
+    if(!ctx) return;
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.lineWidth = 36;
+    ctx.lineJoin = ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.globalCompositeOperation = 'source-over';
+  }
+  function pointerDown(e){
+    isDrawing = true;
+    lastPoint = getPos(e);
+    e.preventDefault();
+  }
+  function pointerMove(e){
+    if (!isDrawing) return;
+    const pos = getPos(e);
+    scratchStroke(lastPoint,pos);
+    lastPoint = pos;
+    checkReveal();
+  }
+  function pointerUp(){
+    isDrawing = false;
+    lastPoint = null;
+  }
+  function checkReveal(){
+    // compute scratched area
+    try{
+      const imageData = ctx.getImageData(0,0,Math.min(w,300),Math.min(h,200));
+      const pixels = imageData.data;
+      let cleared = 0;
+      for(let i=3;i<pixels.length;i+=4){
+        if (pixels[i] === 0) cleared++;
+      }
+      const percent = (cleared / (pixels.length/4)) * 100;
+      if (percent > 40) revealScratch();
+    }catch(e){}
+  }
+  let scratched=false;
+  function revealScratch(){
+    if (scratched) return;
+    scratched=true;
+    // reveal content
+    scratchContent.style.pointerEvents='auto';
+    scratchContent.setAttribute('aria-hidden','false');
+    // animate particles and decorations
+    startCelebration();
+    ariaLive.textContent = 'Details revealed. Congratulations!';
+    // clear overlay fully
+    ctx.clearRect(0,0,w,h);
+  }
+  canvas.addEventListener('touchstart', pointerDown, {passive:false});
+  canvas.addEventListener('touchmove', pointerMove, {passive:false});
+  canvas.addEventListener('touchend', pointerUp);
+  canvas.addEventListener('mousedown', pointerDown);
+  window.addEventListener('mousemove', pointerMove);
+  window.addEventListener('mouseup', pointerUp);
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  // Simple celebration particles (petals, hearts, confetti)
+  function startCelebration(){
+    // add particle container
+    const container = document.createElement('div');
+    container.style.position='fixed';
+    container.style.left=0;container.style.top=0;container.style.width='100%';container.style.height='100%';
+    container.style.pointerEvents='none';container.style.zIndex=9999;
+    document.body.appendChild(container);
+
+    const types = ['petal','heart','spark','confetti'];
+    for(let i=0;i<80;i++){
+      const el = document.createElement('div');
+      const t = types[Math.floor(Math.random()*types.length)];
+      el.className = 'particle '+t;
+      const size = 6 + Math.random()*20;
+      el.style.width = el.style.height = size + 'px';
+      el.style.position='absolute';
+      el.style.left = (Math.random()*100) + '%';
+      el.style.top = '-5%';
+      el.style.opacity = Math.random()*0.9 + 0.3;
+      el.style.transform = `rotate(${Math.random()*360}deg)`;
+      el.style.background = t==='heart' ? 'linear-gradient(45deg,#ff6b9a,#ffd36b)' : (t==='petal' ? '#f3c8d1' : (t==='spark'? 'radial-gradient(circle,#fff8c6,#ffd36b)' : '#c9a94a'));
+      el.style.borderRadius = t==='confetti' ? '2px' : '50%';
+      el.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+      container.appendChild(el);
+
+      // animate with JS for simplicity
+      const duration = 4000 + Math.random()*2500;
+      const leftEnd = (Math.random()*100);
+      const rotate = Math.random()*720;
+      el.animate([
+        { transform: `translateY(0) rotate(0)`, opacity: el.style.opacity },
+        { transform: `translateY(${80 + Math.random()*60}vh) rotate(${rotate}deg)`, left: leftEnd + '%', opacity: 0.2 }
+      ], {duration: duration, easing:'cubic-bezier(.2,.9,.3,1)', iterations:1});
+      setTimeout(()=>el.remove(), duration+100);
+    }
+    setTimeout(()=>container.remove(), 9000);
+  }
+
+  // fade-up reveal on scroll
+  const fadeEls = Array.from(document.querySelectorAll('.fade-up'));
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.classList.add('in');
+    });
+  }, {threshold:0.12});
+  fadeEls.forEach(el=>observer.observe(el));
+
+  // Simple lazy-load for images (if not supported, use native)
+  if ('loading' in HTMLImageElement.prototype) {
+    Array.from(document.querySelectorAll('img[loading="lazy"]')).forEach(img=>{
+      // nothing — native lazy loads
+    });
+  } else {
+    // polyfill: basic lazy load
+    const imgs = document.querySelectorAll('img[loading="lazy"]');
+    const iobs = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const img = entry.target;
+          if(img.dataset.src){ img.src = img.dataset.src; }
+          iobs.unobserve(img);
+        }
+      });
+    });
+    imgs.forEach(img=>iobs.observe(img));
+  }
+
+  // Small helper: smooth scroll for anchor links
+  document.documentElement.style.scrollBehavior = 'smooth';
+
+  // Expose some for debugging
+  window.InviteApp = {
+    togglePlay, enterInvitation
+  };
+
+  // ensure we try to resume audio on first user gesture
+  document.addEventListener('click', function once(){
+    document.removeEventListener('click', once);
+    if (audio && audio.paused && !isPlaying){
+      // do not auto-play; only unlock. Keep paused
+      audio.play().then(()=>audio.pause()).catch(()=>{});
+    }
+  }, {capture:true});
+})();
+JS
+
+cat > "${ROOT_DIR}/README.md" <<'MD'
