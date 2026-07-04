@@ -27,7 +27,30 @@ body {
 }
 
 /* Header */
-.header {
+.header 
+    <!-- Background Music -->
+<audio id="bgmusic" autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7f2e6e7c7a.mp3?filename=soft-nasheed-ambient-110397.mp3" type="audio/mpeg">
+</audio>
+
+<div style="text-align:center; margin-top:10px;">
+  <button onclick="toggleMusic()" 
+    style="background:#d4af37; color:white; padding:10px 20px; border:none; border-radius:8px; font-size:18px;">
+    Play / Pause Nasheed
+  </button>
+</div>
+
+<script>
+function toggleMusic() {
+    var audio = document.getElementById("bgmusic");
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
+</script>
+{
     background: linear-gradient(135deg, #d4af37, #b88a44);
     padding: 70px 20px;
     text-align: center;
