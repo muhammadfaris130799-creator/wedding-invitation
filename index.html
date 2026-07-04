@@ -2,189 +2,364 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Luxury Islamic Wedding – Faris & Fathima</title>
-
-<!-- Countdown Script -->
-<script>
-function updateCountdown() {
-    const weddingDate = new Date("August 20, 2026 00:00:00").getTime();
-    const now = new Date().getTime();
-    const diff = weddingDate - now;
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    document.getElementById("countdown").innerHTML = days + " Days Remaining";
-}
-setInterval(updateCountdown, 1000);
-</script>
+<title>Faris & Fathima – Wedding Invitation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+:root {
+  --bg: #050816;
+  --card: #0f172a;
+  --accent: #eab308;
+  --accent-soft: rgba(234, 179, 8, 0.15);
+  --text: #f9fafb;
+  --muted: #9ca3af;
+  --border: #1f2937;
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Georgia', serif;
-    background: #f5efe6;
-    color: #3a2e2e;
+  font-family: var(--font-main);
+  background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+  color: var(--text);
+  min-height: 100vh;
 }
 
-/* Header */
-.header 
-    <!-- Background Music -->
-<audio id="bgmusic" autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7f2e6e7c7a.mp3?filename=soft-nasheed-ambient-110397.mp3" type="audio/mpeg">
-</audio>
-
-<div style="text-align:center; margin-top:10px;">
-  <button onclick="toggleMusic()" 
-    style="background:#d4af37; color:white; padding:10px 20px; border:none; border-radius:8px; font-size:18px;">
-    Play / Pause Nasheed
-  </button>
-</div>
-
-<script>
-function toggleMusic() {
-    var audio = document.getElementById("bgmusic");
-    if (audio.paused) {
-        audio.play();
-    } else {
-        audio.pause();
-    }
-}
-</script>
-{
-    background: linear-gradient(135deg, #d4af37, #b88a44);
-    padding: 70px 20px;
-    text-align: center;
-    color: white;
-    border-bottom: 6px solid #a67c00;
+/* Layout */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
 }
 
-.header img {
-    width: 120px;
-    margin-bottom: 20px;
+/* Top nav */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
-.header h1 {
-    font-size: 50px;
-    margin: 0;
-    font-weight: bold;
+.nav-title {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-.header h2 {
-    font-size: 26px;
-    margin-top: 10px;
-    font-style: italic;
+.nav-links a {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  margin-left: 16px;
+}
+.nav-links a:hover {
+  color: var(--accent);
 }
 
-/* Main Card */
+/* Card */
 .card {
-    background: white;
-    max-width: 850px;
-    margin: 40px auto;
-    padding: 45px;
-    border-radius: 25px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.15);
-    border: 4px solid #d4af37;
-    background-image: url('https://i.imgur.com/4YQZ8bC.png');
-    background-size: cover;
-    background-repeat: no-repeat;
+  background: linear-gradient(145deg, #020617, #0b1120);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+  padding: 28px 22px 32px;
+}
+
+/* Bismillah */
+.bismillah {
+  text-align: center;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 10px 12px 24px;
+  border-radius: 18px;
+  background: radial-gradient(circle at top, var(--accent-soft), transparent 70%);
+  border: 1px solid rgba(148,163,184,0.3);
+}
+
+.hero-label {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.hero-names {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-and {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 4px 0 2px;
+}
+
+.hero-sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+/* Date & venue */
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.meta-pill {
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.4);
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Countdown */
+.countdown {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--accent);
 }
 
 /* Sections */
+.section {
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(31,41,55,0.8);
+}
+
 .section-title {
-    font-size: 26px;
-    color: #a67c00;
-    margin-top: 35px;
-    font-weight: bold;
-    text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
 }
 
-.parents {
-    font-size: 20px;
-    margin: 10px 0;
-    text-align: center;
+.section-content {
+  font-size: 14px;
+  color: #e5e7eb;
+  line-height: 1.6;
 }
 
-.date {
-    font-size: 24px;
-    margin: 20px 0;
-    text-align: center;
-    font-weight: bold;
+/* Parents */
+.parents-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.parents-card {
+  background: #020617;
+  border-radius: 16px;
+  border: 1px solid rgba(31,41,55,0.9);
+  padding: 12px 12px 14px;
+}
+.parents-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.parents-names {
+  font-size: 14px;
+  color: #e5e7eb;
 }
 
-/* Button */
-.button-area {
-    text-align: center;
-    margin-top: 30px;
+/* Schedule */
+.schedule-list {
+  list-style: none;
+  margin-top: 8px;
+}
+.schedule-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(31,41,55,0.7);
+}
+.schedule-item:last-child {
+  border-bottom: none;
+}
+.schedule-time {
+  color: var(--muted);
+}
+.schedule-label {
+  color: #e5e7eb;
 }
 
-button {
-    background: #d4af37;
-    color: white;
-    padding: 14px 30px;
-    border: none;
-    border-radius: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+/* RSVP */
+.rsvp {
+  margin-top: 26px;
+  text-align: center;
 }
-
-button:hover {
-    background: #b88a44;
+.rsvp-text {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.rsvp-button {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: radial-gradient(circle at top, var(--accent-soft), transparent 70%);
+  color: var(--accent);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+}
+.rsvp-button:hover {
+  background: var(--accent);
+  color: #020617;
 }
 
 /* Footer */
 .footer {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 18px;
-    color: #6d5f5f;
-    padding-bottom: 40px;
+  margin-top: 26px;
+  font-size: 12px;
+  text-align: center;
+  color: var(--muted);
 }
 
-/* Countdown */
-#countdown {
-    font-size: 28px;
-    color: #a67c00;
-    text-align: center;
-    margin-top: 20px;
-    font-weight: bold;
+/* Responsive */
+@media (max-width: 640px) {
+  .card {
+    padding: 22px 16px 26px;
+  }
+  .hero-names {
+    font-size: 26px;
+  }
+  .parents-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
+
+<script>
+// Simple countdown to wedding date
+function updateCountdown() {
+  const weddingDate = new Date("August 01, 2026 18:00:00").getTime();
+  const now = new Date().getTime();
+  const diff = weddingDate - now;
+  if (diff <= 0) {
+    document.getElementById("countdown").innerText = "The blessed day has arrived.";
+    return;
+  }
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  document.getElementById("countdown").innerText = days + " days to go";
+}
+setInterval(updateCountdown, 1000);
+</script>
 </head>
-<body>
+<body onload="updateCountdown()">
 
-<div class="header">
-    <img src="https://i.imgur.com/0ZQZQhC.png" alt="Bismillah">
-    <h1>Faris & Fathima</h1>
-    <h2>In the Name of Allah, the Most Gracious, the Most Merciful</h2>
-</div>
-
-<div class="card">
-    <p class="date">Nikah Ceremony<br>20 August 2026 • Dubai</p>
-
-    <div id="countdown"></div>
-
-    <div class="section-title">Bride's Parents</div>
-    <p class="parents">Subair M & Sameera M K S</p>
-
-    <div class="section-title">Groom's Parents</div>
-    <p class="parents">Muneer A P & Rubiya K P</p>
-
-    <div class="section-title">Invitation</div>
-    <p class="parents">
-        With blessings from Allah, we joyfully invite you to join us<br>
-        in celebrating the sacred union of our children.
-    </p>
-
-    <div class="button-area">
-        <button onclick="alert('Thank you for confirming your attendance!')">
-            Confirm Attendance
-        </button>
+<div class="page">
+  <div class="nav">
+    <div class="nav-title">Faris & Fathima</div>
+    <div class="nav-links">
+      <a href="#parents">Parents</a>
+      <a href="#story">Story</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#rsvp">RSVP</a>
     </div>
-</div>
+  </div>
 
-<div class="footer">
-    May Allah bless this union with love, harmony, and endless happiness.
+  <div class="card">
+    <div class="bismillah">
+      In the name of Allah, the Most Gracious, the Most Merciful
+    </div>
+
+    <div class="hero">
+      <div class="hero-label">Wedding Invitation</div>
+      <div class="hero-names">Faris & Fathima</div>
+      <div class="hero-and">Nikah Ceremony</div>
+      <div class="hero-sub">We warmly invite you to share this blessed moment with us.</div>
+
+      <div class="hero-meta">
+        <div class="meta-pill">01 August 2026</div>
+        <div class="meta-pill">Kerala, India</div>
+      </div>
+
+      <div id="countdown" class="countdown"></div>
+    </div>
+
+    <div id="parents" class="section">
+      <div class="section-title">Parents</div>
+      <div class="parents-grid">
+        <div class="parents-card">
+          <div class="parents-label">Bride's Parents</div>
+          <div class="parents-names">Subair M & Sameera M K S</div>
+        </div>
+        <div class="parents-card">
+          <div class="parents-label">Groom's Parents</div>
+          <div class="parents-names">Muneer A P & Rubiya K P</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="story" class="section">
+      <div class="section-title">Our Story</div>
+      <div class="section-content">
+        With the mercy of Allah, two hearts are brought together in faith and love.
+        We begin this new chapter seeking His blessings and the prayers of our family and friends.
+      </div>
+    </div>
+
+    <div id="schedule" class="section">
+      <div class="section-title">Schedule</div>
+      <ul class="schedule-list">
+        <li class="schedule-item">
+          <span class="schedule-time">6:00 PM</span>
+          <span class="schedule-label">Guest Arrival</span>
+        </li>
+        <li class="schedule-item">
+          <span class="schedule-time">After ,Maghrib</span>
+          <span class="schedule-label">Nikah Ceremony</span>
+        </li>
+        <li class="schedule-item">
+          <span class="schedule-time"></span>
+          <span class="schedule-label">Dinner & Gathering</span>
+        </li>
+      </ul>
+    </div>
+
+    <div id="rsvp" class="section rsvp">
+      <div class="section-title">RSVP</div>
+      <div class="rsvp-text">
+        Kindly confirm your presence so we can welcome you with warmth and comfort.
+      </div>
+      <a class="rsvp-button" href="mailto:yourmail@example.com?subject=RSVP – Faris & Fathima Wedding">
+        Confirm Attendance
+      </a>
+    </div>
+
+    <div class="footer">
+      May Allah bless this union with love, tranquility, and endless happiness.
+    </div>
+  </div>
 </div>
 
 </body>
